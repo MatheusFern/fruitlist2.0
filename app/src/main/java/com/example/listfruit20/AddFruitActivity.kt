@@ -2,17 +2,14 @@ package com.example.listfruit20
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
-import android.media.Image
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.core.view.drawToBitmap
 import com.example.listfruit20.databinding.ActivityAddFruitBinding
 import com.example.listfruit20.model.Fruit
-import java.util.jar.Manifest
 
 class AddFruitActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddFruitBinding
@@ -28,7 +25,7 @@ class AddFruitActivity : AppCompatActivity() {
         fruit?.let {
                 binding.addFruitTitle.setText(fruit.title)
                 binding.addFruitDescription.setText(fruit.description)
-                binding.ImgPreviewFruit.setImageResource(fruit.Img)
+                binding.ImgPreviewFruit.setImageBitmap(fruit.Img)
         }
         val positionData = intent?.getIntExtra(MainActivity.MAIN_ACTIVITY_FRUIT_POSITION, -1)
         positionData?.let {
@@ -52,28 +49,29 @@ class AddFruitActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 123 ) {
-            var bitmap = data?.extras?.get("data") as Bitmap
-            binding.ImgPreviewFruit.setImageURI(data.data)
+                binding.ImgPreviewFruit.setImageURI(data?.data)
+
         }
     }
 
-//    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId){
-//        R.id.menu_add_fruit -> {
-//
-//            val title = binding.addFruitTitle.text.toString()
-//            val description = binding.addFruitDescription.text.toString()
-//            val image = binding.ImgPreviewFruit.setImageResource()
-//
-//            val fruit = Fruit(title, description,)
-//            val returnIntent = Intent (this, MainActivity::class.java)
-//            returnIntent.putExtra(MainActivity.MAIN_ACTIVITY_FRUIT_EXTRA, fruit)
-//            returnIntent.putExtra(MainActivity.MAIN_ACTIVITY_FRUIT_POSITION, position)
-//            setResult(Activity.RESULT_OK,returnIntent)
-//            finish()
-//            true
-//        } else ->{
-//            super.onOptionsItemSelected(item)
-//        }
-//
-//    }
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId){
+        R.id.menu_add_fruit -> {
+
+            val title = binding.addFruitTitle.text.toString()
+            val description = binding.addFruitDescription.text.toString()
+            val image = binding.ImgPreviewFruit.drawToBitmap()
+
+            val fruit = Fruit(title, description,image)
+
+            val returnIntent = Intent (this, MainActivity::class.java)
+            returnIntent.putExtra(MainActivity.MAIN_ACTIVITY_FRUIT_EXTRA, fruit)
+            returnIntent.putExtra(MainActivity.MAIN_ACTIVITY_FRUIT_POSITION, position)
+            setResult(Activity.RESULT_OK,returnIntent)
+            finish()
+            true
+        } else ->{
+            super.onOptionsItemSelected(item)
+        }
+
+    }
 }
