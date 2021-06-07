@@ -1,8 +1,13 @@
 package com.example.listfruit20.helper
 
+import android.app.Activity
+import android.app.AlertDialog
+import android.content.Intent
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.listfruit20.MainActivity
+import com.example.listfruit20.R
 
 class FruitItemTouchHelperCallback(private val fruitRecyclerAdapter: com.example.listfruit20.ListAdapter)
     : ItemTouchHelper.Callback() {
@@ -29,8 +34,10 @@ class FruitItemTouchHelperCallback(private val fruitRecyclerAdapter: com.example
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-       val position = viewHolder.adapterPosition
+        val position = viewHolder.adapterPosition
         fruitRecyclerAdapter.remove(position)
+
+
 
     }
 }

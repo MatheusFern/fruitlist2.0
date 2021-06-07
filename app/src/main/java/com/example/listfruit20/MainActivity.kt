@@ -38,8 +38,19 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(view)
 
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+
+        setContentView(view)
+
         preList()
         setupRecyclerView()
+
     }
 
     private fun onNoteClickListener(fruit: Fruit,position: Int) {

@@ -1,10 +1,12 @@
 package com.example.listfruit20
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.core.app.ShareCompat
 import androidx.core.view.drawToBitmap
 import com.example.listfruit20.databinding.ActivityDetailsAtivityBinding
@@ -35,9 +37,29 @@ class DetailsAtivity : AppCompatActivity() {
     }
 
     fun deleteFruit(view: View) {
-        val retornar = Intent()
-        retornar.putExtra(MainActivity.MAIN_ACTIVITY_FRUIT_POSITION,position)
-        setResult(Activity.RESULT_OK, retornar)
-        finish()
+     binding.btnRemove.setOnClickListener{
+
+
+        val builder = AlertDialog.Builder(this)
+
+        builder.setTitle("Deseja mesmo remover essa fruta")
+
+        builder.setPositiveButton(getString(R.string.yes)) { dialog, id ->
+
+              val retornar = Intent()
+              retornar.putExtra(MainActivity.MAIN_ACTIVITY_FRUIT_POSITION,position)
+              setResult(Activity.RESULT_OK, retornar)
+              finish()
+        }
+        builder.setNegativeButton(getString(R.string.no)) { dialog, id ->
+
+        }
+
+        val alertDialog = builder.create()
+
+        alertDialog.show()
+
+
+     }
     }
 }
